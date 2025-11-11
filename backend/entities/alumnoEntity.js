@@ -16,5 +16,10 @@ export const AlumnoEntity = new EntitySchema({
       type: "one-to-many",
       inverseSide: "alumno",
     },
+    carrera: {
+      target: "Carrera",
+      type: "many-to-one",
+      joinColumn: { name: "carrera_id" },
+    },
   },
 });

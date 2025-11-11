@@ -34,4 +34,5 @@ export const InscripcionController = {
       res.status(500).json({ error: "Error al crear inscripción" });
     }
   },
+
 };
