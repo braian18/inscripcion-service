@@ -5,7 +5,11 @@ export const InscripcionEntity = new EntitySchema({
   tableName: "inscripciones",
   columns: {
     id: { primary: true, type: "int", generated: true },
-    fecha_inscripcion: { type: "timestamp", createDateColumn: true },
+    fecha_inscripcion: {
+      type: "timestamp",
+      createDateColumn: true,
+      default: () => "CURRENT_TIMESTAMP", // 👈 Agregada
+    },
     estado: {
       type: "enum",
       enum: ["ACTIVA", "CANCELADA", "FINALIZADA"],
