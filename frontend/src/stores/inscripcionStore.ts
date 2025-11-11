@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-const API_URL = 'http://localhost:3000' // URL del backend
+const API_URL = 'http://localhost:3000' 
 
 export const useInscripcionStore = defineStore('inscripcion', {
   state: () => ({
-    alumnoId: 3,
+    alumnoId: 1,
     alumnoNombre: '',
     carreraNombre: '',
     materiasDisponibles: [] as any[],
@@ -15,7 +15,7 @@ export const useInscripcionStore = defineStore('inscripcion', {
   }),
 
   actions: {
-    // 📘 Obtener materias disponibles
+
     async fetchMateriasDisponibles() {
       this.loading = true
       try {
@@ -31,7 +31,7 @@ export const useInscripcionStore = defineStore('inscripcion', {
       }
     },
 
-    // 📘 Obtener inscripciones actuales
+
     async fetchInscripciones() {
       try {
         const res = await axios.get(`${API_URL}/api/inscripciones?alumnoId=${this.alumnoId}`)
@@ -41,7 +41,7 @@ export const useInscripcionStore = defineStore('inscripcion', {
       }
     },
 
-    // 🟢 Inscribirse a una materia
+
     async inscribirse(materiaId: number) {
       try {
         await axios.post(`${API_URL}/api/inscripciones`, {
@@ -59,17 +59,17 @@ export const useInscripcionStore = defineStore('inscripcion', {
       }
     },
 
-    // 🔴 Cancelar una inscripción
+
     async cancelarInscripcion(inscripcionId: number) {
   try {
     await axios.put(`${API_URL}/api/inscripciones/${inscripcionId}/cancelar`)
 
-    // Actualizamos solo en memoria sin recargar todo
+ 
     this.inscripciones = this.inscripciones.map((ins) =>
       ins.id === inscripcionId ? { ...ins, estado: 'CANCELADA' } : ins
     )
 
-    // Opcional: actualizamos materias disponibles (si querés que vuelva a aparecer)
+
     await this.fetchMateriasDisponibles()
 
     return { success: true, message: 'Inscripción cancelada correctamente 🟥' }

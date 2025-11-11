@@ -12,7 +12,7 @@ const visible = ref(false)
 watchEffect(() => {
   visible.value = props.show
   if (props.show) {
-    setTimeout(() => (visible.value = false), 3000) // se oculta en 3s
+    setTimeout(() => (visible.value = false), 3000)
   }
 })
 </script>

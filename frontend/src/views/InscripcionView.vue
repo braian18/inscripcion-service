@@ -56,7 +56,7 @@ async function handleCancelar(inscripcionId: number) {
         </p>
 
         <div class="grid grid-cols-2 gap-8">
-            <!-- 📚 Materias disponibles -->
+          
             <div>
                 <h2 class="text-2xl mb-4 text-emerald-400">Materias disponibles</h2>
                 <ul>
@@ -74,7 +74,7 @@ async function handleCancelar(inscripcionId: number) {
                 </p>
             </div>
 
-            <!-- 🧾 Inscripciones -->
+           
             <div>
                 <h2 class="text-2xl mb-4 text-cyan-400">Mis inscripciones</h2>
                 <table class="min-w-full border border-gray-700 rounded-lg overflow-hidden">
@@ -112,13 +112,13 @@ async function handleCancelar(inscripcionId: number) {
             </div>
         </div>
 
-        <!-- 🔔 Toast -->
+      
         <Toast :show="toast.show" :message="toast.message" :type="toast.type" />
     </div>
 </template>
 
 <style scoped>
-/* (Opcional) animación sutil del hover */
+
 button {
     transition: background-color 0.2s ease;
 }
