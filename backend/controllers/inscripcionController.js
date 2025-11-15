@@ -1,5 +1,5 @@
 import { AppDataSource } from "../db.js";
-
+import { sendLog } from "ds-logging-producer-kit";
 const repo = () => AppDataSource.getRepository("Inscripcion");
 
 export const InscripcionController = {
@@ -43,16 +43,27 @@ export const InscripcionController = {
         alumno: { id: alumno_id },
         materia: { id: materia_id },
       });
-
       await repo().save(nueva);
       res.status(201).json(nueva);
+
+      try {
+      await sendLog({
+          level: "INFO",
+          user: "Inscripciones",
+          clientIp: "190.179.183.71",
+          message: "Alumno se inscribio a una materia",
+          });
+          } catch (e) {
+          console.error("No se pudo publicar el evento.", e.message);
+      }
+
     } catch (error) {
       console.error("Error al crear inscripción:", error);
       res.status(500).json({ error: "Error al crear inscripción" });
     }
   },
 
-  // 🔴 NUEVA FUNCIÓN: cancelar inscripción
+  
   async cancelar(req, res) {
     try {
       const { id } = req.params;
@@ -67,6 +78,18 @@ export const InscripcionController = {
       await repo().save(inscripcion);
 
       res.json({ message: "Inscripción cancelada correctamente" });
+
+      try {
+      await sendLog({
+          level: "INFO",
+          user: "Incripciones",
+          clientIp: "190.179.183.71",
+          message: "Alumno se dio de baja de una materia",
+          });
+          } catch (e) {
+          console.error("No se pudo publicar el evento.", e.message);
+      }
+
     } catch (error) {
       console.error("Error al cancelar inscripción:", error);
       res.status(500).json({ error: "Error al cancelar inscripción" });
