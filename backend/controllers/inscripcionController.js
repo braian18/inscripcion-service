@@ -49,8 +49,8 @@ export const InscripcionController = {
       try {
       await sendLog({
           level: "INFO",
-          user: `alumno`,
-          clientIp: "127.0.0.1",
+          user: "Inscripciones",
+          clientIp: "190.179.183.71",
           message: "Alumno se inscribio a una materia",
           });
           } catch (e) {
@@ -82,8 +82,8 @@ export const InscripcionController = {
       try {
       await sendLog({
           level: "INFO",
-          user: `alumno:`,
-          clientIp: "127.0.0.1",
+          user: "Incripciones",
+          clientIp: "190.179.183.71",
           message: "Alumno se dio de baja de una materia",
           });
           } catch (e) {
