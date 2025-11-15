@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/inscripciones", inscripcionRoutes);
-app.use("/materias", materiaRoutes);
+app.use("/api/materias", materiaRoutes);
 
 app.get("/", (req, res) => {
   res.json({ mensaje: "API de Inscripción funcionando correctamente ✅" });

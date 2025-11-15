@@ -1,0 +1,23 @@
+{
+  "name": "ds-logging-producer-kit",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.9",
+    "dotenv": "^17.2.2",
+    "joi": "^18.0.1",
+    "uuid": "^13.0.0"
+  }
+}

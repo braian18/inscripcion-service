@@ -11,6 +11,7 @@
     "axios": "^1.7.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "ds-logging-producer-kit": "file:../ds-logging-producer-kit-main",
     "express": "^4.19.2",
     "mariadb": "^3.3.0",
     "mysql": "^2.18.1",
