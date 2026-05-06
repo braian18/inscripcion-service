@@ -5,36 +5,52 @@ dotenv.config();
 import { AppDataSource } from "./db.js";
 import app from "./app.js";
 
-import {initProducer, closeProducer} from "ds-logging-producer-kit"
-
+import { initProducer, closeProducer } from "ds-logging-producer-kit";
 
 const PORT = process.env.PORT || 3000;
 
 const main = async () => {
-
   await initProducer();
 
-  AppDataSource.initialize()
-    .then(() => {
-      console.log("✅ Conectado a MariaDB");
-      app.listen(PORT, () => {
-        console.log(`🟢 Servidor corriendo en http://localhost:${PORT}`);
-      });
+  try {
+    await AppDataSource.initialize();
+    console.log("Conectado a MariaDB");
+  } catch (error) {
+    console.error(" Error al conectar con la base de datos:", error);
+    process.exit(1);
+  }
 
-    })
-    .catch((error) => {
-      console.error("❌ Error al conectar con la base de datos:", error);
-    });
+  // Guardamos el server para poder cerrarlo después
+  const server = app.listen(PORT, () => {
+    console.log(` Servidor corriendo en http://localhost:${PORT}`);
+  });
 
-  const safeCLose = async () => {
+  // Shutdown ordenado
+  const safeClose = async () => {
+    console.log(" Cerrando aplicación…");
+
     try {
       await closeProducer();
-    } catch (error) {
-      process.exit(0)
+      console.log("Producer cerrado");
+    } catch (err) {
+      console.error("Error cerrando producer:", err);
     }
-  }
-  process.once("SIGINT", safeCLose);
-  process.once("SIGTERM", safeCLose)
+
+    try {
+      await AppDataSource.destroy();
+      console.log("Conexión a DB cerrada");
+    } catch (err) {
+      console.error(" Error cerrando DB:", err);
+    }
+
+    server.close(() => {
+      console.log("Servidor detenido");
+      process.exit(0);
+    });
+  };
+
+  process.on("SIGINT", safeClose);
+  process.on("SIGTERM", safeClose);
 };
 
 main();
